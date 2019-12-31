@@ -1,3 +1,4 @@
+
 #some of this code was made by miachel neilsen
 import random
 
@@ -113,3 +114,8 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
+if __name__ = "__main__":
+    hidden_layer_height = 15
+    training_data = np.load("data.npy")
+    net = network.Network([625,hidden_layer_height,2])
+    net.SGD(training_data, 30, 10, 3.0)
