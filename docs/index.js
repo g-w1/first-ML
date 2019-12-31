@@ -1,1 +1,1 @@
-document.getElementById("header").innerHTML = toString(math.sqrt(4))
+document.getElementById("header").innerHTML = toString(2)
