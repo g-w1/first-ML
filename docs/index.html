@@ -5,9 +5,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js" type="text/javascript"></script>
 </head>
 <body>
-  <h1>asdf</h1>
+  <h1 id = "test">asdf</h1>
   <script type="text/javascript">
-    console.log(math.sqrt(-4).toString()) // 2i
+    document.getElementById("test").innerHTML = math.sqrt(-4).toString() // 2i
   </script>
 </body>
 </html>
