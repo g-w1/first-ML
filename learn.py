@@ -5,7 +5,7 @@ import random
 # Third-party libraries
 import numpy as np
 class Network(object):
-    def __init__(self, sizes):
+    def __init__(self, sizes, weights = None, biases = None):
         """The list ``sizes`` contains the number of neurons in the
         respective layers of the network.  For example, if the list
         was [2, 3, 1] then it would be a three-layer network, with the
@@ -21,6 +21,10 @@ class Network(object):
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
+        if biases:
+            self.biases = biases
+        if weights:
+            self.weights = weights
 
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
