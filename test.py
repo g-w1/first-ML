@@ -1,15 +1,10 @@
-def feedforward(weights,biases,a):
-  for w,b in zip(weights,biases):
-    a = sigmoid(np.dot(w, a)+b)
-      return a
-def sigmoid(z):
-  def sigmoid(z):
-    """The sigmoid function."""
-  return 1.0/(1.0+np.exp(-z))
+inputweights = []#put answers from training here
+inputbiases = []
 import enterdata
 screen  = Screen()
-output = feedforward(weight,bias,screen.update_test())
-if output[1]>.5:
-  print("smiely")
+network = Network([625,15,2],inputweights,inputbiases)
+output = network.feedforward(screen.update_test())
+if np.argmax(output) = output[1]:
+  print(frowney face)
 else:
-  print("frowny")
+  print(smiely face)
