@@ -10,8 +10,8 @@
   <script type="text/javascript">
     scale = 4;
     var win = document.getElementById("myCanvas");
-    win.width = 4;
-    win.height = 4;
+    win.width = toString(scale*Number(win.width));
+    win.height = toString(scale*Number(win.height));
     class Screen{
   constructor(scale){
     this.scale = scale
