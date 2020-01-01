@@ -29,14 +29,14 @@ class Pixel:
 			self.value+=20
 		pygame.draw.rect(win,(255*self.value,255*self.value,255*self.value),self.rect)
 if __name__  = "__main__":
-	scale  = 4
+	scale = 4
 	win = pygame.display.set_mode((25*scale,25*scale))
 	data = np.load("data.npy")
 	exit = False
 	while not(exit):
 		for event in pygame.event.get():
         if event.type == pygame.QUIT:
-					exit = True
-		data.append(Screen(4).update())
-		np.save("data",data)
+		exit = True
+	data.append(Screen(scale).update())
+	np.save("data",data)
 	np.save("data",data)
