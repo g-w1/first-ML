@@ -8,7 +8,29 @@
   <h1 id = "header">asdf</h1>
   <canvas id = "myCanvas" width = "25" height = "25"></canvas>
   <script type="text/javascript">
+    scale = 4;
     var win = document.getElementById("myCanvas");
+    win.width = 4;
+    win.height = 4;
+    class Screen{
+  constructor(scale){
+    this.scale = scale
+		this.pixels = []
+    for (y = 0; y < 25; y++;){
+    for (x = 0; x < 25; x++;){
+    this.pixels.append(pixel(x,y));
+    }
+    }
+  
+	draw(){
+		for (i = 0; i<len(this.pixels); i++;){
+    this.pixels[i].draw()
+    }}
+	update(){
+		this.loop = true
+		while self.loop = true{
+			self.draw()
+		//return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1)),self.iden)}}}
     
   </script>
 </body>
