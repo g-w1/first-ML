@@ -3,25 +3,31 @@
 <head>
   <title>test</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js" type="text/javascript"></script>
+  <script src = "https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js" type = "text/javascript"/>
 </head>
 <body>
   <h1 id = "header">asdf</h1>
-  <canvas id = "myCanvas" width = "25" height = "25" style="border:1px solid #000000;"></canvas>
+  <button id = "guess">guess</button>
   <script type="text/javascript">
-    var scale = 4;
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContent("2d");
-    canvas.width = scale*win.width;
-    canvas.height = scale*win.height;
-		function getCursorPosition(canvas, event) {
-    const rect = canvas.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    console.log("x: " + x + " y: " + y)
-}
-const canvas2 = document.querySelector('canvas')
-canvas.addEventListener('mousedown', function(e) {
-    getCursorPosition(canvas2, e)
-})  </script>
+  function draw() {
+  strokeWeight(8);
+  stroke(0);
+  if (mouseIsPressed) {
+    line(pmouseX, pmouseY, mouseX, mouseY);
+  }
+  function setup() {
+  createCanvas(280, 280);
+  background(255);}
+  let guessButton = select('#guess');
+  guessButton.mousePressed(function() {
+    let inputs = [];
+    let img = get();
+    img.resize(28, 28);
+    img.loadPixels();
+    for (let i = 0; i < len; i++) {
+      let bright = img.pixels[i * 4];
+      inputs[i] = (255 - bright) / 255.0;
+    }}
+   </script>
 </body>
 </html>
