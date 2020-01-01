@@ -11,40 +11,17 @@
     var scale = 4;
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContent("2d");
-    canvas.width = toString(scale*Number(win.width));
-    canvas.height = toString(scale*Number(win.height));
+    canvas.width = scale*win.width;
+    canvas.height = scale*win.height;
 		function getCursorPosition(canvas, event) {
     const rect = canvas.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
     console.log("x: " + x + " y: " + y)
 }
-const canvas = document.querySelector('canvas')
+//const canvas = document.querySelector('canvas')
 canvas.addEventListener('mousedown', function(e) {
     getCursorPosition(canvas, e)
-})
-	
-    
-    class Screen{
-  constructor(scale){
-    this.scale = scale
-		this.pixels = []
-    for (y = 0; y < 25; y++;){
-    for (x = 0; x < 25; x++;){
-    this.pixels.append(pixel(x,y));
-    }
-    }
-  
-	draw(){
-		for (i = 0; i<len(this.pixels); i++;){
-    this.pixels[i].draw()
-    }}
-	update(){
-		this.loop = true
-		while self.loop = true{
-			self.draw()
-		//return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1)),self.iden)}}}
-    
-  </script>
+})  </script>
 </body>
 </html>
