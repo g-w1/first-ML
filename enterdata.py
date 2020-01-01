@@ -18,7 +18,15 @@ class Screen:
 			elif pygame.key.get_pressed()[pygame.K_s]:
 				self.loop = False
 				self.iden = [0,1]
-		return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1)),self.iden)
+		return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1)),np.reshape(np.asarray(self.iden),(2,1))
+	def update_test(self):
+		self.loop = True
+		while self.loop:
+			self.draw()
+			if pygame.key.get_pressed()[pygame.K_SPACE]:
+				self.loop = False
+		return numpy.asarray([[x.value] for x in self.pixels])
+	
 class Pixel:
 	def __init__(self,x,y,scale):
 		self.scale = scale
