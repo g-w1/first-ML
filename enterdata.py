@@ -14,11 +14,11 @@ class Screen:
 			self.draw()
 			if pygame.key.get_pressed()[pygame.K_s]:
 				self.loop = False
-				self.iden = [1,0]
+				self.iden = [[1],[0]]
 			elif pygame.key.get_pressed()[pygame.K_s]:
 				self.loop = False
-				self.iden = [0,1]
-		return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1)),np.reshape(np.asarray(self.iden),(2,1))
+				self.iden = [[0],[1]]
+		return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1)),np.asarray(self.iden))
 	def update_test(self):
 		self.loop = True
 		while self.loop:
