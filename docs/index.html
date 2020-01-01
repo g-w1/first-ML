@@ -9,9 +9,22 @@
   <canvas id = "myCanvas" width = "25" height = "25" style="border:1px solid #000000;"></canvas>
   <script type="text/javascript">
     var scale = 4;
-    var win = document.getElementById("myCanvas");
-    win.width = toString(scale*Number(win.width));
-    win.height = toString(scale*Number(win.height));
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContent("2d");
+    canvas.width = toString(scale*Number(win.width));
+    canvas.height = toString(scale*Number(win.height));
+		function getCursorPosition(canvas, event) {
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    console.log("x: " + x + " y: " + y)
+}
+const canvas = document.querySelector('canvas')
+canvas.addEventListener('mousedown', function(e) {
+    getCursorPosition(canvas, e)
+})
+	
+    
     class Screen{
   constructor(scale){
     this.scale = scale
