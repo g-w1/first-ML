@@ -15,7 +15,6 @@ class Screen:
 	def draw(self):
 		for pixel in self.pixels:
 			pixel.draw()
-		#pygame.display.update()
 	def update(self):
 		self.loop = True
 		global skip
@@ -36,7 +35,6 @@ class Screen:
 				if event.type == pygame.QUIT:
 					self.loop = False
 					skip = True
-		print("skipped")
 	def update_test(self):
 		self.loop = True
 		while self.loop:
@@ -47,7 +45,7 @@ class Screen:
 			if event.type == pygame.QUIT:
 				self.loop = False
 		return numpy.asarray([[x.value] for x in self.pixels])
-	
+
 class Pixel:
 	def __init__(self,x,y,scale):
 		self.scale = scale
@@ -71,7 +69,8 @@ class Pixel:
 print(__name__)
 if __name__  == "__main__":
 	win.fill((0,0,0))
-	if not(skipi):	
-		data = []#np.load("data.npy")
+	if not(skipi):
+		data = []#np.loadtxt("test.txt")
 		data = np.append(data,Screen(scale).update())
-		np.save("data",data)
+		if skip == False:
+			np.savetxt("test.txt",data)
