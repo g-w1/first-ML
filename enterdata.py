@@ -9,15 +9,15 @@ class Screen:
 		for y in range(25):
 			for x in range(25):
 				self.pixels.append(Pixel(x,y,self.scale))
-	def draw(self):
+	def draw(self,surf):
 		for pixel in self.pixels:
-			pixel.draw()
-	def update(self):
+			pixel.draw(surf)
+	def update(self,surf):
 		self.loop = True
 		global skip
 		skip = False
 		while self.loop:
-			self.draw()
+			self.draw(surf)
 			if pygame.key.get_pressed()[pygame.K_s]:
 				self.loop = False
 				self.iden = [[1],[0]]
@@ -33,10 +33,10 @@ class Screen:
 					self.loop = False
 					skip = True
 		print("skipped")
-	def update_test(self):
+	def update_test(self,surf):
 		self.loop = True
 		while self.loop:
-			self.draw()
+			self.draw(surf)
 			if pygame.key.get_pressed()[pygame.K_SPACE]:
 				self.loop = False
 		for event in pygame.event.get():
@@ -52,11 +52,11 @@ class Pixel:
 		self.y = y*scale
 		self.rect = (self.x,self.y,self.scale,self.scale)
 		self.sq = scale
-	def draw(self):
+	def draw(self,surf):
 		global win
 		if self.clicked():
 			self.value=1
-		pygame.draw.rect(win,(round((255*self.value)),round(255*self.value),round(255*self.value)),(self.x,self.y,self.sq,self.sq))
+		pygame.draw.rect(surf,(round((255*self.value)),round(255*self.value),round(255*self.value)),(self.x,self.y,self.sq,self.sq))
 	def clicked(self):
 		if pygame.mouse.get_pressed()[0] == True and pygame.Rect((self.x,self.y,self.sq,self.sq)).collidepoint(pygame.mouse.get_pos()) == True:
 			return True
@@ -68,5 +68,5 @@ if __name__  == "__main__":
 	win.fill((5,5,5))
 	if not(skip):	
 		data = np.load("data.npy")
-		np.append(data,Screen(scale).update())
+		np.append(data,Screen(scale).update(win))
 		np.save("data",data)
