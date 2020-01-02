@@ -1,6 +1,6 @@
 import numpy as np
 import pygame
-skip = False
+skipi = False
 pygame.init()
 if __name__ == "__main__":
 	scale = 25
@@ -15,6 +15,7 @@ class Screen:
 	def draw(self):
 		for pixel in self.pixels:
 			pixel.draw()
+		#pygame.display.update()
 	def update(self):
 		self.loop = True
 		global skip
@@ -58,19 +59,19 @@ class Pixel:
 	def draw(self):
 		global win
 		if self.clicked():
-			self.value+=.1
-		if self.value!=0:
+			self.value+=.01
 			pygame.draw.rect(win,(round(255*self.value),round(255*self.value),round(255*self.value)),self.rect)
-		pygame.display.update()
+			pygame.display.update()
 	def clicked(self):
-		if pygame.mouse.get_pressed()[0] == True and pygame.Rect((self.x,self.y,self.sq,self.sq)).collidepoint(pygame.mouse.get_pos()) == True:
+		if pygame.mouse.get_pressed()[0] == True and self.value< 1 and pygame.Rect((self.x,self.y,self.sq,self.sq)).collidepoint(pygame.mouse.get_pos()) == True:
 			#print("clicked",pygame.mouse.get_pos())
 			return True
 		else:
 			return False
+print(__name__)
 if __name__  == "__main__":
 	win.fill((0,0,0))
-	if not(skip):	
-		data = np.load("data.npy")
-		np.append(data,Screen(scale).update())
+	if not(skipi):	
+		data = []#np.load("data.npy")
+		data = np.append(data,Screen(scale).update())
 		np.save("data",data)
