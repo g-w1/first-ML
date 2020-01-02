@@ -126,14 +126,12 @@ def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
 if __name__ == "__main__":
-    hidden_layer_height = 15
-    f = open("data.data","rb")
-    a = pickle.load(f)
+    f = open("data_expanded.data","rb")
+    training_data = pickle.load(f)
     f.close()
-    training_data = a
-    net = Network([625,hidden_layer_height,2])
+    net = Network([625,15,2])
     net.SGD(training_data, 30, 10, 3.0)
     #net.SGD(training_data[:60], 30, 10, 3.0,test_data=training_data[80:101])
-    f = open("data_expanded.data","wb")
+    f = open("data_2.data","wb")
     pickle.dump([net.weights,net.biases],f)
     f.close
