@@ -4,6 +4,7 @@ import gzip as gz
 import pickle
 skipi = False
 skip = False
+go = True
 pygame.init()
 if __name__ == "__main__":
 	scale = 25
@@ -20,6 +21,7 @@ class Screen:
 			pixel.draw()
 	def update(self):
 		self.loop = True
+		global go
 		global skip
 		skip = False
 		while self.loop:
@@ -27,17 +29,16 @@ class Screen:
 			if pygame.key.get_pressed()[pygame.K_s]:
 				self.loop = False
 				self.iden = [[1],[0]]
-				print(np.asarray(np.reshape([x.value for x in self.pixels], (625,1))),self.iden)
 				return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1))),np.asarray(self.iden))
 			if pygame.key.get_pressed()[pygame.K_f]:
 				self.loop = False
 				self.iden = [[0],[1]]
-				print(np.asarray(np.reshape([x.value for x in self.pixels], (625,1))))
 				return (np.asarray(np.reshape([x.value for x in self.pixels], (625,1))),np.asarray(self.iden))
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					self.loop = False
 					skip = True
+					go = False
 	def update_test(self):
 		self.loop = True
 		while self.loop:
@@ -69,10 +70,11 @@ class Pixel:
 			return True
 		else:
 			return False
-print(__name__)
 if __name__  == "__main__":
-	win.fill((0,0,0))
+
 	if not(skipi):
+
+		win.fill((0,0,0))
 		f=open("data.data","rb")
 		data =pickle.load(f)
 		f.close()
@@ -81,3 +83,4 @@ if __name__  == "__main__":
 			f=open("data.data","wb")
 			pickle.dump(data,f)
 			f.close()
+			win.fill((0,0,0))
