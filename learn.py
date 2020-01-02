@@ -132,6 +132,6 @@ if __name__ == "__main__":
     net = Network([625,15,2])
     net.SGD(training_data, 30, 10, 3.0)
     #net.SGD(training_data[:60], 30, 10, 3.0,test_data=training_data[80:101])
-    f = open("data_2.data","wb")
+    f = open("data2.data","wb")
     pickle.dump([net.weights,net.biases],f)
     f.close
