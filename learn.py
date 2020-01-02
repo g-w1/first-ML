@@ -108,8 +108,8 @@ class Network(object):
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
         return (nabla_b, nabla_w)
     def cost_derivative(self, output_activations, y):
-        """Return the vector of partial derivatives \partial C_x /
-        \partial a for the output activations."""
+        """Return the vector of partial derivatives partial C_x /
+        partial a for the output activations."""
         return (output_activations-y)
 def sigmoid(z):
     """The sigmoid function."""

@@ -57,7 +57,7 @@ class Pixel:
 	def draw(self):
 		global win
 		if self.clicked():
-			self.value+=.01
+			self.value+=.04
 			pygame.draw.rect(win,(round(255*self.value),round(255*self.value),round(255*self.value)),self.rect)
 			pygame.display.update()
 	def clicked(self):
@@ -70,7 +70,8 @@ print(__name__)
 if __name__  == "__main__":
 	win.fill((0,0,0))
 	if not(skipi):
-		data = []#np.loadtxt("test.txt")
-		data = np.append(data,Screen(scale).update())
+		'''data = []#np.loadtxt("test.txt")
+		data = np.append(data,Screen(scale).update())'''
+		data = Screen(scale).update()
 		if skip == False:
 			np.savetxt("test.txt",data)
