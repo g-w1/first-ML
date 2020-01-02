@@ -2,6 +2,9 @@ import numpy as np
 import pygame
 skip = False
 pygame.init()
+if __name__ == "__main__":
+	scale = 25
+	win = pygame.display.set_mode((25*scale,25*scale))
 class Screen:
 	def __init__(self,scale):
 		self.scale = scale
@@ -9,15 +12,15 @@ class Screen:
 		for y in range(25):
 			for x in range(25):
 				self.pixels.append(Pixel(x,y,self.scale))
-	def draw(self,surf):
+	def draw(self):
 		for pixel in self.pixels:
-			pixel.draw(surf)
-	def update(self,surf):
+			pixel.draw()
+	def update(self):
 		self.loop = True
 		global skip
 		skip = False
 		while self.loop:
-			self.draw(surf)
+			self.draw()
 			if pygame.key.get_pressed()[pygame.K_s]:
 				self.loop = False
 				self.iden = [[1],[0]]
@@ -33,10 +36,10 @@ class Screen:
 					self.loop = False
 					skip = True
 		print("skipped")
-	def update_test(self,surf):
+	def update_test(self):
 		self.loop = True
 		while self.loop:
-			self.draw(surf)
+			self.draw()
 			if pygame.key.get_pressed()[pygame.K_SPACE]:
 				self.loop = False
 		for event in pygame.event.get():
@@ -52,21 +55,22 @@ class Pixel:
 		self.y = y*scale
 		self.rect = (self.x,self.y,self.scale,self.scale)
 		self.sq = scale
-	def draw(self,surf):
+	def draw(self):
 		global win
 		if self.clicked():
-			self.value=1
-		pygame.draw.rect(surf,(round((255*self.value)),round(255*self.value),round(255*self.value)),(self.x,self.y,self.sq,self.sq))
+			self.value+=.1
+		if self.value!=0:
+			pygame.draw.rect(win,(round(255*self.value),round(255*self.value),round(255*self.value)),self.rect)
+		pygame.display.update()
 	def clicked(self):
 		if pygame.mouse.get_pressed()[0] == True and pygame.Rect((self.x,self.y,self.sq,self.sq)).collidepoint(pygame.mouse.get_pos()) == True:
+			#print("clicked",pygame.mouse.get_pos())
 			return True
 		else:
 			return False
 if __name__  == "__main__":
-	scale = 25
-	win = pygame.display.set_mode((25*scale,25*scale))
-	win.fill((5,5,5))
+	win.fill((0,0,0))
 	if not(skip):	
 		data = np.load("data.npy")
-		np.append(data,Screen(scale).update(win))
+		np.append(data,Screen(scale).update())
 		np.save("data",data)
