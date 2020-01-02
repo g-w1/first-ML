@@ -1,6 +1,9 @@
 import numpy as np
 import pygame
+import gzip as gz
+import pickle
 skipi = False
+skip = False
 pygame.init()
 if __name__ == "__main__":
 	scale = 25
@@ -70,8 +73,11 @@ print(__name__)
 if __name__  == "__main__":
 	win.fill((0,0,0))
 	if not(skipi):
-		'''data = []#np.loadtxt("test.txt")
-		data = np.append(data,Screen(scale).update())'''
-		data = Screen(scale).update()
+		f=open("data.data","rb")
+		data =pickle.load(f)
+		f.close()
+		data.append(Screen(scale).update())
 		if skip == False:
-			np.savetxt("test.txt",data)
+			f=open("data.data","wb")
+			pickle.dump(data,f)
+			f.close()
