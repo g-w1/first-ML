@@ -129,9 +129,14 @@ if __name__ == "__main__":
     f = open("data_expanded.data","rb")
     training_data = pickle.load(f)
     f.close()
-    net = Network([625,15,2])
-    net.SGD(training_data, 30, 10, 3.0)
+    hiddenlayersize = 15
+    learningrate = 3.0
+    mini_batch_size = 10
+    epochs = 30
+    net = Network([625,hiddenlayersize,2])
+    net.SGD(training_data, epochs, mini_batch_size, learningrate)
     #net.SGD(training_data[:60], 30, 10, 3.0,test_data=training_data[80:101])
-    f = open("data2.data","wb")
+    f = open("data_2.data","wb")
     pickle.dump([net.weights,net.biases],f)
     f.close
+    print("closed")

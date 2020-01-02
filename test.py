@@ -4,7 +4,7 @@ from enterdata import Screen
 from learn import Network
 import numpy as np
 scale = 25
-f = open("data2.data","rb")
+f = open("data_2.data","rb")
 params = pickle.load(f)
 f.close()
 inputweights = params[0]
