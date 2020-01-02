@@ -1,10 +1,10 @@
 
 #some of this code was made by miachel neilsen
 import random
-
+import pickle
 # Third-party libraries
 import numpy as np
-class Network(object):
+class Network:
     def __init__(self, sizes, weights = None, biases = None):
         """The list ``sizes`` contains the number of neurons in the
         respective layers of the network.  For example, if the list
@@ -44,18 +44,17 @@ class Network(object):
         tracking progress, but slows things down substantially."""
         if test_data: n_test = len(test_data)
         n = len(training_data)
-        for j in xrange(epochs):
+        for j in range(epochs):
             random.shuffle(training_data)
             mini_batches = [
                 training_data[k:k+mini_batch_size]
-                for k in xrange(0, n, mini_batch_size)]
+                for k in range(0, n, mini_batch_size)]
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
             if test_data:
-                print "Epoch {0}: {1} / {2}".format(
-                    j, self.evaluate(test_data), n_test)
+                print("Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data), n_test))
             else:
-                print "Epoch {0} complete".format(j)
+                print("Epoch {0} complete".format(j))
 
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying
@@ -100,13 +99,21 @@ class Network(object):
         # second-last layer, and so on.  It's a renumbering of the
         # scheme in the book, used here to take advantage of the fact
         # that Python can use negative indices in lists.
-        for l in xrange(2, self.num_layers):
+        for l in range(2, self.num_layers):
             z = zs[-l]
             sp = sigmoid_prime(z)
             delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
         return (nabla_b, nabla_w)
+    def evaluate(self, test_data):
+        """Return the number of test inputs for which the neural
+        network outputs the correct result. Note that the neural
+        network's output is assumed to be the index of whichever
+        neuron in the final layer has the highest activation."""
+        test_results = [(np.argmax(self.feedforward(x)), y)
+                        for (x, y) in test_data]
+        return sum(int(x == y) for (x, y) in test_results)
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives partial C_x /
         partial a for the output activations."""
@@ -118,8 +125,15 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
-if __name__ = "__main__":
+if __name__ == "__main__":
     hidden_layer_height = 15
-    training_data = np.load("data.npy")
-    net = network.Network([625,hidden_layer_height,2])
+    f = open("data.data","rb")
+    a = pickle.load(f)
+    f.close()
+    training_data = a
+    net = Network([625,hidden_layer_height,2])
     net.SGD(training_data, 30, 10, 3.0)
+    #net.SGD(training_data[:60], 30, 10, 3.0,test_data=training_data[80:101])
+    f = open("data_expanded.data","wb")
+    pickle.dump([net.weights,net.biases],f)
+    f.close

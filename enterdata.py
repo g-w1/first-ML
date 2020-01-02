@@ -2,10 +2,6 @@ import numpy as np
 import pygame
 import gzip as gz
 import pickle
-skipi = False
-skip = False
-go = True
-pygame.init()
 if __name__ == "__main__":
 	scale = 25
 	win = pygame.display.set_mode((25*scale,25*scale))
@@ -16,16 +12,18 @@ class Screen:
 		for y in range(25):
 			for x in range(25):
 				self.pixels.append(Pixel(x,y,self.scale))
-	def draw(self):
+	def draw(self,window):
+		global win
 		for pixel in self.pixels:
-			pixel.draw()
+			pixel.draw(window)
 	def update(self):
 		self.loop = True
+		global win
 		global go
 		global skip
 		skip = False
 		while self.loop:
-			self.draw()
+			self.draw(win)
 			if pygame.key.get_pressed()[pygame.K_s]:
 				self.loop = False
 				self.iden = [[1],[0]]
@@ -39,16 +37,18 @@ class Screen:
 					self.loop = False
 					skip = True
 					go = False
-	def update_test(self):
+	def update_test(self,window):
 		self.loop = True
 		while self.loop:
-			self.draw()
+			self.draw(window)
 			if pygame.key.get_pressed()[pygame.K_SPACE]:
 				self.loop = False
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				self.loop = False
-		return numpy.asarray([[x.value] for x in self.pixels])
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					self.loop = False
+		pygame.quit()
+		return np.asarray([[x.value] for x in self.pixels])
+
 
 class Pixel:
 	def __init__(self,x,y,scale):
@@ -58,11 +58,11 @@ class Pixel:
 		self.y = y*scale
 		self.rect = (self.x,self.y,self.scale,self.scale)
 		self.sq = scale
-	def draw(self):
+	def draw(self,window):
 		global win
 		if self.clicked():
 			self.value+=.04
-			pygame.draw.rect(win,(round(255*self.value),round(255*self.value),round(255*self.value)),self.rect)
+			pygame.draw.rect(window,(round(255*self.value),round(255*self.value),round(255*self.value)),self.rect)
 			pygame.display.update()
 	def clicked(self):
 		if pygame.mouse.get_pressed()[0] == True and self.value< 1 and pygame.Rect((self.x,self.y,self.sq,self.sq)).collidepoint(pygame.mouse.get_pos()) == True:
@@ -71,16 +71,22 @@ class Pixel:
 		else:
 			return False
 if __name__  == "__main__":
-
+	skipi = False
+	skip = False
+	go = True
 	if not(skipi):
-
-		win.fill((0,0,0))
-		f=open("data.data","rb")
-		data =pickle.load(f)
-		f.close()
-		data.append(Screen(scale).update())
-		if skip == False:
-			f=open("data.data","wb")
-			pickle.dump(data,f)
-			f.close()
+		while go:
+			pygame.init()
+			win = pygame.display.set_mode((25*scale,25*scale))
 			win.fill((0,0,0))
+			f=open("data.data","rb")
+			data = pickle.load(f)
+			f.close()
+			print(len(data))
+			data.append(Screen(scale).update())
+			if skip == False:
+				f=open("data.data","wb")
+				pickle.dump(data,f)
+				f.close()
+				win.fill((0,0,0))
+				pygame.quit()
