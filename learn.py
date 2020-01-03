@@ -123,7 +123,7 @@ if __name__ == "__main__":
     f.close()
 
     learningrate = 3.5
-    mini_batch_size = 25
+    mini_batch_size = 1
     epochs = 20
     net = Network(layers)
     net.SGD(training_data, epochs, mini_batch_size, learningrate)

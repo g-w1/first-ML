@@ -43,4 +43,4 @@ else:
     f = open("data_expanded.data","wb")
     pickle.dump(expanded_training_pairs,f)
     f.close()
-    print(len(expanded_training_pairs)," images")
+    print(len(expanded_training_pairs),"images")
