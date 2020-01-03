@@ -8,11 +8,27 @@ import pickle
 import numpy as np
 
 print("Expanding the training set")
+def expand(image):
+    expanded = []
+    img = np.reshape(image, (-1, 25))
+    for d, axis, index_position, index in [
+            (1,  0, "first", 0),
+            (-1, 0, "first", 24),
+            (1,  1, "last",  0),
+            (-1, 1, "last",  24)]:
+        new_img = np.roll(img, d, axis)
+        if index_position == "first":
+            new_img[index, :] = np.zeros(25)
+        else:
+            new_img[:, index] = np.zeros(25)
+        expanded.append((np.reshape(new_img, (625,-1)), y))
+    return (expanded[x] for x in range(4))
 
-if os.path.exists("data_expanded.data") and override == False:
+
+if os.path.exists("data/data_expanded.data") and override == False:
     print("The expanded training set already exists.  Exiting.")
 else:
-    f = open("data.data","rb")
+    f = open("data/data.data","rb")
     training_data = pickle.load(f)
     expanded_training_pairs = []
     f.close()
@@ -40,7 +56,7 @@ else:
     random.shuffle(expanded_training_pairs)
     expanded_training_data = [list(d) for d in zip(*expanded_training_pairs)]
     print("Saving")
-    f = open("data_expanded.data","wb")
+    f = open("data/data_expanded.data","wb")
     pickle.dump(expanded_training_pairs,f)
     f.close()
     print(len(expanded_training_pairs),"images")
