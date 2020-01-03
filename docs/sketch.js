@@ -1,6 +1,6 @@
 function setup() {
 
-  createCanvas(280, 280);
+  createCanvas(500, 500);
   background(0);
   let guessButton = select('#guess');
   guessButton.mousePressed(function() {
@@ -17,11 +17,11 @@ console.log(predict(inputs))
   let clearButton = select("#clear");
   clearButton.mousePressed(function(){
       background(0);
-      document.getElementById("header").innerHTML = " ";
+      document.getElementById("header").innerHTML = "Draw a Smiley face or a Frowney face and hit guess to make the computer classify it";
   })
 }
 function draw() {
-  strokeWeight(30);
+  strokeWeight(60);
   stroke(255);
   if (mouseIsPressed) {
     line(pmouseX, pmouseY, mouseX, mouseY);
