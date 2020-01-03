@@ -21,7 +21,7 @@ class Network:
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        self.weights = [np.random.randn(y, x)/np.sqrt(x)
+        self.weights = [np.random.randn(y, x)/np.sqrt(x/4)
                         for x, y in zip(sizes[:-1], sizes[1:])]
         if biases:
             self.biases = biases
@@ -116,7 +116,7 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
-layers = [625,5,7,2]
+layers = [625,10,10,10,2]
 if __name__ == "__main__":
     f = open("data_expanded.data","rb")
     training_data = pickle.load(f)
