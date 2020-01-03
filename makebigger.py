@@ -39,8 +39,8 @@ else:
             expanded_training_pairs.append((np.reshape(new_img, (625,-1)), y))
     random.shuffle(expanded_training_pairs)
     expanded_training_data = [list(d) for d in zip(*expanded_training_pairs)]
-    print("Saving expanded data. This may take a few minutes.")
+    print("Saving")
     f = open("data_expanded.data","wb")
     pickle.dump(expanded_training_pairs,f)
     f.close()
-    print(len(expanded_training_pairs))
+    print(len(expanded_training_pairs)," images")
