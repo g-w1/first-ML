@@ -2136,7 +2136,7 @@ let weights = [[[-2.75193362e-02, -4.40108602e-02,  2.28592906e-02,
        //console.log(inputs);
        output = sigmoid(math.add(math.multiply(weights[1],inputs),biases[1]));
        if (output[1]<output[0]){
-           document.getElementById("header").innerHTML = "Smiely Face";
+           document.getElementById("header").innerHTML = "Smiley Face";
            return "smiely"
 
        }else{
