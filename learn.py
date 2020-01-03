@@ -2,6 +2,7 @@
 #some of this code was made by miachel neilsen
 import random
 import pickle
+hiddenlayersize = 30
 # Third-party libraries
 import numpy as np
 class Network:
@@ -129,7 +130,7 @@ if __name__ == "__main__":
     f = open("data_expanded.data","rb")
     training_data = pickle.load(f)
     f.close()
-    hiddenlayersize = 100
+
     learningrate = 5.5
     mini_batch_size = 10
     epochs = 30
