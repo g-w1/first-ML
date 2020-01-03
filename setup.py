@@ -1,4 +1,4 @@
 import os
-os.system('makebigger.py')
-os.system('learn.py')
-os.system("test.py")
+os.system('python makebigger.py')
+os.system('python learn.py')
+os.system("python numbercorrect.py")
