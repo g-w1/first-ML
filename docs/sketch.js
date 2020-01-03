@@ -21,7 +21,7 @@ console.log(predict(inputs))
   })
 }
 function draw() {
-  strokeWeight(20);
+  strokeWeight(30);
   stroke(255);
   if (mouseIsPressed) {
     line(pmouseX, pmouseY, mouseX, mouseY);
