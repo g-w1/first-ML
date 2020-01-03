@@ -1,20 +1,28 @@
 function setup() {
+
   createCanvas(280, 280);
-  background(200);
+  background(0);
   let guessButton = select('#guess');
   guessButton.mousePressed(function() {
-    let inputs = [];
+    let inputs = []
     let img = get();
     img.resize(25, 25);
     img.loadPixels();
-    for (let i = 0; i < img.length; i++) {
+    console.log(img.length)
+    for (let i = 0; i <625; i++) {
       let bright = img.pixels[i * 4];
-      inputs[i] = (255 - bright) / 255.0;
-      console.log(inputs)
-    }})}
+      inputs.push(bright/255.0);
+    }
+predict(inputs)
+})
+}
 function draw() {
   strokeWeight(10);
-  stroke(0);
+  stroke(255);
   if (mouseIsPressed) {
     line(pmouseX, pmouseY, mouseX, mouseY);
-}}
+}
+}
+function predict(inputs){
+console.log(inputs)
+}
