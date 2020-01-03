@@ -2,7 +2,8 @@
 #some of this code was made by miachel neilsen
 import random
 import pickle
-hiddenlayersize = 30
+import os
+
 # Third-party libraries
 import numpy as np
 class Network:
@@ -20,7 +21,7 @@ class Network:
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        self.weights = [np.random.randn(y, x)
+        self.weights = [np.random.randn(y, x)/np.sqrt(x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
         if biases:
             self.biases = biases
@@ -52,7 +53,7 @@ class Network:
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
             else:
-                print("Epoch {0} complete".format(j))
+                print("Epoch {0} complete".format(j+1))
 
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying
@@ -115,17 +116,17 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
+layers = [625,5,7,2]
 if __name__ == "__main__":
     f = open("data_expanded.data","rb")
     training_data = pickle.load(f)
     f.close()
 
-    learningrate = 5.5
-    mini_batch_size = 10
-    epochs = 30
-    net = Network([625,hiddenlayersize,2])
+    learningrate = 3.5
+    mini_batch_size = 25
+    epochs = 20
+    net = Network(layers)
     net.SGD(training_data, epochs, mini_batch_size, learningrate)
     f = open("data_2.data","wb")
     pickle.dump([net.weights,net.biases],f)
     f.close
-    print("closed")

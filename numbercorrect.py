@@ -1,12 +1,12 @@
 import pickle
-from learn import Network,hiddenlayersize
+from learn import Network,layers
 import numpy as np
 f = open("data_2.data","rb")
 params = pickle.load(f)
 f.close()
 inputweights = params[0]
 inputbiases = params[1]
-network = Network([625,hiddenlayersize,2],inputweights,inputbiases)
+network = Network(layers,inputweights,inputbiases)
 f= open("test_data.data","rb")
 test_data = pickle.load(f)
 f.close()
