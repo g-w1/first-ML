@@ -1,6 +1,7 @@
 function setup() {
 
-  createCanvas(500, 500);
+  var canv = createCanvas(500, 500);
+  canv.parent("canvas")
   background(0);
   let guessButton = select('#guess');
   guessButton.mousePressed(function() {
