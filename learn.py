@@ -109,21 +109,25 @@ class Network:
         """Return the vector of partial derivatives partial C_x /
         partial a for the output activations."""
         return (output_activations-y)
+def feedforward(weights, biases, a):
+    """Return the output of the network if ``a`` is input."""
+    for b, w in zip(biases, weights):
+        a = sigmoid(np.dot(w, a)+b)
 def sigmoid(z):
     """The sigmoid function."""
     return 1.0/(1.0+np.exp(-z))
-
+    #return np.maximum(0,z)
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
+    #return (z>0) * 1
 layers = [625,10,2]
 if __name__ == "__main__":
     f = open("data/data_expanded.data","rb")
     training_data = pickle.load(f)
     f.close()
-
-    learningrate = 3
-    mini_batch_size = 1
+    learningrate = 4
+    mini_batch_size = 4
     epochs = 5
     net = Network(layers)
     net.SGD(training_data, epochs, mini_batch_size, learningrate)
