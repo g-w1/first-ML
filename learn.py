@@ -44,14 +44,26 @@ class Network:
                 corr+=1
         return corr/len(training_data)
     def fitness_cost(self,training_data):
-        costtotal = []
+		costtotal = []
         for img in test_data:
             test = self.feedforward(img[0])
             cost = np.mean(np.absolute(img[1]-test))
             costtotal.append(cost)
         return np.mean(costtotal)
-    def mutate(self):
-		pass
+    def mutate(self,mutation_rate):
+	
+		def inputrandom(n,mutationrate,changerate):
+			r = random.uniform(0, 1)
+			if r<mutationrate:
+				return n+=r*changerate
+		for i in self.weights:
+			for a in i:
+				for b in a:
+					inputrandom(b,.04,.1)
+		for i in self.biases:
+			for a in i:
+				for b in a:
+					inputrandom(b,.04,.1)
 def sigmoid(z):
     """The sigmoid function."""
     return 1.0/(1.0+np.exp(-z))
