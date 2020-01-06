@@ -7,10 +7,16 @@ import os
 # Third-party libraries
 import numpy as np
 class Population:
-	def __init__(n):
+	def __init__(self,n):
+		self.genepoop = []
 		self.pop = []
 		for x in range(n):
 			self.pop.append(Network([625,10,2]))
+	def addgenepool(self):
+		global training_data
+		for network in self.pop:
+			for x in network.fitness_numcor(training_data):
+				pass
 class Network:
     def __init__(self, sizes, weights = None, biases = None):
         """The list ``sizes`` contains the number of neurons in the
