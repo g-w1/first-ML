@@ -8,15 +8,20 @@ import os
 import numpy as np
 class Population:
 	def __init__(self,n):
-		self.genepoop = []
+		self.number = n
+		self.genepool = []
 		self.pop = []
 		for x in range(n):
 			self.pop.append(Network([625,10,2]))
 	def addgenepool(self):
 		global training_data
 		for network in self.pop:
-			for x in network.fitness_numcor(training_data):
-				pass
+			for x in round(network.fitness_numcor(training_data)):
+				self.genepool.append(network.mutate(.04))
+	def createnewpop(self)
+		self.pop = []
+		for x in range(self.number):
+			self.pop.append(self.genepool.pop(random.randint(0,len(self.genepool)-1)
 class Network:
     def __init__(self, sizes, weights = None, biases = None):
         """The list ``sizes`` contains the number of neurons in the
@@ -66,15 +71,18 @@ class Network:
 		def inputrandom(n,mutationrate,changerate):
 			r = random.uniform(0, 1)
 			if r<mutationrate:
-				return n+=r*changerate
+				a = random.randint(0,1)
+				if a == 0:
+					a = 1
+				return n+=a*changerate
 		for i in self.weights:
 			for a in i:
 				for b in a:
-					inputrandom(b,.04,.1)
+					inputrandom(b,.mutationrate,.1)
 		for i in self.biases:
 			for a in i:
 				for b in a:
-					inputrandom(b,.04,.1)
+					inputrandom(b,.mutationrate,.1)
 def sigmoid(z):
     """The sigmoid function."""
     return 1.0/(1.0+np.exp(-z))
