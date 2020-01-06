@@ -61,7 +61,9 @@ class Pixel:
 	def draw(self,window):
 		global win
 		if self.clicked():
-			self.value+=.04
+			self.value+=.17
+			if self.value>1:
+				self.value = 1
 			pygame.draw.rect(window,(round(255*self.value),round(255*self.value),round(255*self.value)),self.rect)
 			pygame.display.update()
 	def clicked(self):
@@ -79,13 +81,13 @@ if __name__  == "__main__":
 			pygame.init()
 			win = pygame.display.set_mode((25*scale,25*scale))
 			win.fill((0,0,0))
-			f=open("data/data.data","rb")
+			f=open("data/test_data.data","rb")
 			data = pickle.load(f)
 			f.close()
 			print(len(data))
 			data.append(Screen(scale).update())
 			if skip == False:
-				f=open("data/data.data","wb")
+				f=open("data/test_data.data","wb")
 				pickle.dump(data,f)
 				f.close()
 				pygame.quit()
