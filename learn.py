@@ -6,6 +6,11 @@ import os
 
 # Third-party libraries
 import numpy as np
+class Population:
+	def __init__(n):
+		self.pop = []
+		for x in range(n):
+			self.pop.append(Network([625,10,2]))
 class Network:
     def __init__(self, sizes, weights = None, biases = None):
         """The list ``sizes`` contains the number of neurons in the
@@ -73,12 +78,3 @@ if __name__ == "__main__":
     f = open("data/data_expanded.data","rb")
     training_data = pickle.load(f)
     f.close()
-    learningrate = 4
-    mini_batch_size = 4
-    epochs = 5
-    net = Network(layers)
-    net.SGD(training_data, epochs, mini_batch_size, learningrate)
-    f = open("data/data_2.data","wb")
-    pickle.dump([net.weights,net.biases],f)
-    f.close
-    os.system("python numbercorrect.py")
