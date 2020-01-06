@@ -7,18 +7,18 @@ import os
 # Third-party libraries
 import numpy as np
 class Population:
-	def __init__(self,n):
+	def __init__(self,n,layers):
 		self.number = n
 		self.genepool = []
 		self.pop = []
 		for x in range(n):
-			self.pop.append(Network([625,10,2]))
+			self.pop.append(Network(layers))
 	def addgenepool(self):
 		global training_data
 		for network in self.pop:
 			for x in round(network.fitness_numcor(training_data)):
 				self.genepool.append(network.mutate(.04))
-	def createnewpop(self)
+	def createnewpop(self):
 		self.pop = []
 		for x in range(self.number):
 			self.pop.append(self.genepool.pop(random.randint(0,len(self.genepool)-1)
@@ -37,8 +37,7 @@ class Network:
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        self.weights = [np.random.randn(y, x)/np.sqrt(x/5)
-                        for x, y in zip(sizes[:-1], sizes[1:])]
+        self.weights = [np.random.randn(y, x)/np.sqrt(x/5) for x, y in zip(sizes[:-1], sizes[1:])]
         if biases:
             self.biases = biases
         if weights:
@@ -58,6 +57,8 @@ class Network:
                 corr+=1
             if test[0][0]<test[1][0] and img[1][0][0]<img[1][1][0]:
                 corr+=1
+        if corr/len(training_data)>70:
+            print("working")
         return corr/len(training_data)
     def fitness_cost(self,training_data):
 		costtotal = []
@@ -67,7 +68,7 @@ class Network:
             costtotal.append(cost)
         return np.mean(costtotal)
     def mutate(self,mutation_rate):
-	
+
 		def inputrandom(n,mutationrate,changerate):
 			r = random.uniform(0, 1)
 			if r<mutationrate:
