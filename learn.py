@@ -62,6 +62,10 @@ class Network:
 		z = 100*(1/np.mean(costtotal))
 		if z>70:
 			print("working")
+		if z>90:
+			f = open("data/data_2.data","w")
+			pickle.save([self.weights,self.biases],f)
+			f.close()
         return z
     def mutate(self,mutation_rate,changerate):
 		#changes mutation_rate elements changerate*1,-1
