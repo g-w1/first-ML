@@ -93,7 +93,11 @@ if __name__ == "__main__":
 	#create 1000 networks
 	networks = Population(1000,layers)
 	exit = False
+	counter = 1
 	while not(exit):
+		c+=1
+		if c>100000:
+			exit = True
 		#main loop
 		networks.addgenepool()
 		networks.createnewpop()
