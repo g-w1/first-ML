@@ -3,8 +3,6 @@
 import random
 import pickle
 import os
-
-# Third-party libraries
 import numpy as np
 class Population:
 	def __init__(self,n,layers):
@@ -21,7 +19,7 @@ class Population:
 	def createnewpop(self):
 		self.pop = []
 		for x in range(self.number):
-			self.pop.append(self.genepool.pop(random.randint(0,len(self.genepool)-1)
+			self.pop.append(self.genepool.pop(random.randint(0,len(self.genepool)-1)))
 class Network:
     def __init__(self, sizes, weights = None, biases = None):
         """The list ``sizes`` contains the number of neurons in the
