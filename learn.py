@@ -51,6 +51,10 @@ class Network:
                 corr+=1
         if 100(corr/len(training_data))>70:
             print("working")
+	if 100(corr/len(training_data))>90:
+            f = open("data/data_2.data","w")
+			pickle.save([self.weights,self.biases],f)
+			f.close()
         return 100 *(corr/len(training_data))
     def fitness_cost(self,training_data):
 		#a fitness function for a network that is calculated inversely to the average cost
