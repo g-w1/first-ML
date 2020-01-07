@@ -57,8 +57,8 @@ class Network:
 			f.close()
         return 100 *(corr/len(training_data))
     def fitness_cost(self,training_data):
-		#a fitness function for a network that is calculated inversely to the average cost
-		costtotal = []
+	#a fitness function for a network that is calculated inversely to the average cost
+	costtotal = []
         for img in test_data:
             test = self.feedforward(img[0])
             cost = np.mean(np.absolute(img[1]-test))
