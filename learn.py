@@ -57,14 +57,14 @@ class Network:
                 corr+=1
         if corr/len(training_data)>70:
             print("working")
-        return corr/len(training_data)
+        return 100 *(corr/len(training_data))
     def fitness_cost(self,training_data):
 		costtotal = []
         for img in test_data:
             test = self.feedforward(img[0])
             cost = np.mean(np.absolute(img[1]-test))
             costtotal.append(cost)
-        return np.mean(costtotal)
+        return 100*(np.mean(costtotal))
     def mutate(self,mutation_rate):
 
 		def inputrandom(n,mutationrate,changerate):
