@@ -14,9 +14,8 @@ class Population:
 			self.pop.append(Network(layers))
 		#makes n networks with layers layers
 	def addgenepool(self):
-		global training_data
 		for network in self.pop:
-			for x in round(network.fitness_numcor(training_data)):
+			for x in range(round(network.fitness_numcor())):
 				self.genepool.append(network.mutate(.04,.1))
 		#adds each network to the genepool its finess times
 	def createnewpop(self):
@@ -41,9 +40,10 @@ class Network:
         for b, w in zip(self.biases, self.weights):
             a = sigmoid(np.dot(w, a)+b)
         return a
-    def fitness_numcor(self,training_data):
+    def fitness_numcor(self):
+		global training_data
 		#a fitness function for a network that is calculated by how many it gets correct
-        for img in test_data:
+        for img in training_data:
             test = self.feedforward(img[0])
             if test[0][0]>test[1][0] and img[1][0][0]>img[1][1][0]:
                 corr+=1
@@ -56,14 +56,15 @@ class Network:
 			pickle.save([self.weights,self.biases],f)
 			f.close()
         return 100 *(corr/len(training_data))
-    def fitness_cost(self,training_data):
-	#a fitness function for a network that is calculated inversely to the average cost
-	costtotal = []
+    def fitness_cost(self):
+		#a fitness function for a network that is calculated inversely to the average cost
+		global trainng_data
+		costtotal = []#an array to hold the mean cost for each training example
         for img in test_data:
             test = self.feedforward(img[0])
             cost = np.mean(np.absolute(img[1]-test))
             costtotal.append(cost)
-		z = 100*(1/np.mean(costtotal))
+		z = 100*(1-(np.mean(costtotal)))
 		if z>70:
 			print("working")
 		if z>90:
