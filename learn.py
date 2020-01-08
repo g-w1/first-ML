@@ -4,6 +4,7 @@ import random
 import pickle
 import os
 import numpy as np
+import keyboard
 class Population:
 	#class to manage networks
 	def __init__(self,n,layers):
@@ -115,10 +116,12 @@ if __name__ == "__main__":
 	training_data = pickle.load(f)
 	f.close()
 	#create 1000 networks
-	networks = Population(300,layers)
+	networks = Population(100,layers)
 	exit = False
 	counter = 0
 	while not(exit):
+		if keyboard.is_pressed('q'):
+			exit = True
 		counter+=1
 		print(counter)
 		#exit = True
