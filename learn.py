@@ -83,11 +83,19 @@ class Network:
 			r = random.uniform(0, 1)
 			if r<mutationrate:
 				a = random.randint(0,1)
+<<<<<<< HEAD
 			else:
 				return n
 			if a == 0:
 				a = 1
 			return n+a*changerate
+=======
+				if a == 0:
+					a = 1
+				return n+=a*changerate
+			else:
+				return n
+>>>>>>> 4d640292a2f41c0055bec6c7410590d2b7e4e700
 		for i in self.weights:
 			for a in i:
 				for b in a:
