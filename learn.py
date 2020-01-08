@@ -12,20 +12,24 @@ class Population:
 		self.pop = []
 		for x in range(self.number):
 			self.pop.append(Network(layers))
+
 			#makes n networks with layers layers
 	def addgenepool(self):
+		for network in self.pop:
 
-		for network in range(len(self.pop)):
-			fit = self.pop[network].fitness_numcor()
-			print(type(fit))
+			fit = network.fitness_numcor()
+
 			times = round(fit)
 			for x in range(times):
-				self.genepool.append(self.pop[network].mutate(.04,.1))
+				self.genepool.append(network.mutate(.1,.1))
 				#adds each network to the genepool its finess times
+
 	def createnewpop(self):
 		self.pop = []
 		for x in range(self.number):
-			self.pop.append(self.genepool.pop(random.randint(0,len(self.genepool)-1)))
+			l = len(self.genepool)-1
+			a = random.randint(0,l)
+			self.pop.append(self.genepool[a])
 			#takes the genepool and selects a random element to add to the pop n times
 class Network:
 	def __init__(self, sizes, weights = None, biases = None):
@@ -45,6 +49,7 @@ class Network:
 			a = sigmoid(np.dot(w, a)+b)
 		return a
 	def fitness_numcor(self):
+		global exit
 		corr = 0
 		global training_data
 		for img in training_data:
@@ -53,12 +58,15 @@ class Network:
 				corr+=1
 			if test[0][0]<test[1][0] and img[1][0][0]<img[1][1][0]:
 				corr+=1
-		'''if 100*(corr/len(training_data))>70:
+		fit = 100*(corr/len(training_data))
+		if fit>70:
 			print("working")
-		if 100*(corr/len(training_data))>90:
+		if fit>90:
 			f = open("data/data_2.data","w")
 			pickle.save([self.weights,self.biases],f)
-			f.close()'''
+			f.close()
+			exit = True
+		print(fit)
 		return 100 *(corr/len(training_data))
 	def fitness_cost(self):
 		#a fitness function for a network that is calculated inversely to the average cost
@@ -83,19 +91,11 @@ class Network:
 			r = random.uniform(0, 1)
 			if r<mutationrate:
 				a = random.randint(0,1)
-<<<<<<< HEAD
 			else:
 				return n
 			if a == 0:
 				a = 1
 			return n+a*changerate
-=======
-				if a == 0:
-					a = 1
-				return n+=a*changerate
-			else:
-				return n
->>>>>>> 4d640292a2f41c0055bec6c7410590d2b7e4e700
 		for i in self.weights:
 			for a in i:
 				for b in a:
@@ -104,6 +104,7 @@ class Network:
 			for a in i:
 				for b in a:
 					inputrandom(b,mutation_rate,changerate)
+		return self
 def sigmoid(z):
 	#The sigmoid function
 	return 1.0/(1.0+np.exp(-z))
@@ -114,15 +115,13 @@ if __name__ == "__main__":
 	training_data = pickle.load(f)
 	f.close()
 	#create 1000 networks
-	networks = Population(10,layers)
+	networks = Population(300,layers)
 	exit = False
-	counter = 1
+	counter = 0
 	while not(exit):
 		counter+=1
-		if counter>100000:
-			pass
-			print(counter)
-			#exit = True
+		print(counter)
+		#exit = True
 		#main loop
 		networks.addgenepool()
 		networks.createnewpop()
