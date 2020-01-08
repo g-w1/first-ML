@@ -82,6 +82,8 @@ class Network:
 				if a == 0:
 					a = 1
 				return n+=a*changerate
+			else:
+				return n
 		for i in self.weights:
 			for a in i:
 				for b in a:
