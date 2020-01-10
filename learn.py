@@ -16,18 +16,20 @@ class Population:
 
 			#makes n networks with layers layers
 	def addgenepool(self):
+		self.genepool = []
 		global layers
 		topfit = Network(layers)
 		topfit.fitness_numcor()
 		for network in self.pop:
-
 			fit = round(network.fitness_numcor())
 			if fit>topfit.fitness:
 				topfit = network
-		for x in range(self.number):
+
+		for x in range(round(self.number/2)-1):
 			self.genepool.append(topfit)
 		for x in range(len(self.genepool)):
 			self.genepool[x] = self.genepool[x].mutate(.1,.1)
+		self.genepool.append(topfit)
 
 	def createnewpop(self):
 		self.pop = []
@@ -59,9 +61,9 @@ class Network:
 		global training_data
 		for img in training_data:
 			test = self.feedforward(img[0])
-			if test[0][0]>test[1][0] and img[1][0][0]>img[1][1][0]:
+			if test[0][0]>test[1][0] and img[1][0]>img[1][1]:
 				corr+=1
-			if test[0][0]<test[1][0] and img[1][0][0]<img[1][1][0]:
+			if test[0][0]<test[1][0] and img[1][0]<img[1][1]:
 				corr+=1
 		fit = 100*(corr/len(training_data))
 		if fit>70:
@@ -83,12 +85,12 @@ class Network:
 			cost = np.mean(np.absolute(img[1]-test))
 			costtotal.append(cost)
 
-			'''if z>70:
+			if z>70:
 				print("working")
 			if z>90:
 				f = open("data/data_2.data","w")
 				pickle.save([self.weights,self.biases],f)
-				f.close()'''
+				f.close()
 		z = 100*(1-(np.mean(costtotal)))
 		print(z)
 		self.fitness = z
@@ -103,7 +105,7 @@ class Network:
 			else:
 				return n
 			if a == 0:
-				a = 1
+				a = -1
 			return n+a*changerate
 		for i in range(len(self.weights)):
 			for a in range(len(self.weights[i])):
@@ -124,7 +126,7 @@ if __name__ == "__main__":
 	training_data = pickle.load(f)
 	f.close()
 	#create 1000 networks
-	networks = Population(40,layers)
+	networks = Population(50,layers)
 	exit = False
 	counter = 0
 	while not(exit):
