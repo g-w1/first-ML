@@ -5,39 +5,28 @@ import pickle
 import os
 import numpy as np
 import keyboard
+import time
 class Population:
 	#class to manage networks
 	def __init__(self,n,layers):
 		self.number = n
-		self.genepool = []
 		self.pop = []
 		for x in range(self.number):
 			self.pop.append(Network(layers))
+		self.topfit = Network(layers)
+		self.topfit.fitness_numcor()
 
 			#makes n networks with layers layers
-	def addgenepool(self):
-		self.genepool = []
-		global layers
-		topfit = Network(layers)
-		topfit.fitness_numcor()
+	def mainloop(self):
 		for network in self.pop:
-			fit = round(network.fitness_numcor())
-			if fit>topfit.fitness:
-				topfit = network
-
-		for x in range(round(self.number/2)-1):
-			self.genepool.append(topfit)
-		for x in range(len(self.genepool)):
-			self.genepool[x] = self.genepool[x].mutate(.1,.1)
-		self.genepool.append(topfit)
-
-	def createnewpop(self):
+			if network.fitness_numcor()>self.topfit.fitness:
+				self.topfit = network
+				print("changed")
 		self.pop = []
-		for x in range(self.number):
-			l = len(self.genepool)-1
-			a = random.randint(0,l)
-			self.pop.append(self.genepool[a])
-			#takes the genepool and selects a random element to add to the pop n times
+		self.pop.append(self.topfit)
+		for x in range(self.number-1):
+			self.pop.append(self.topfit.mutate(.3,.5))
+		#mutates
 class Network:
 	def __init__(self, sizes, weights = None, biases = None):
 		#creates a network of size layers with random weights and biases unless weighs and biases are specified
@@ -55,7 +44,7 @@ class Network:
 		for b, w in zip(self.biases, self.weights):
 			a = sigmoid(np.dot(w, a)+b)
 		return a
-	def fitness_numcor(self):
+	def fitness_numcor(self,show = True):
 		global exit
 		corr = 0
 		global training_data
@@ -73,9 +62,11 @@ class Network:
 			pickle.save([self.weights,self.biases],f)
 			f.close()
 			exit = True
-		print(fit)
+			print("            exited                            ")
+		if show:
+			print(fit)
 		self.fitness = fit
-		return 100 *(corr/len(training_data))
+		return fit
 	def fitness_cost(self):
 		#a fitness function for a network that is calculated inversely to the average cost
 		global training_data
@@ -97,6 +88,8 @@ class Network:
 		return z
 	def mutate(self,mutation_rate,changerate):
 		#changes mutation_rate elements changerate*1,-1
+		net = self
+
 		def inputrandom(n,mutationrate,changerate):
 			#returns a mutated number given an input
 			r = random.uniform(0, 1)
@@ -107,15 +100,16 @@ class Network:
 			if a == 0:
 				a = -1
 			return n+a*changerate
-		for i in range(len(self.weights)):
-			for a in range(len(self.weights[i])):
-				for b in range(len(self.weights[i][a])):
-					self.weights[i][a][b] = inputrandom(self.weights[i][a][b],mutation_rate,changerate)
-		for i in range(len(self.biases)):
-			for a in range(len(self.biases[i])):
-				for b in range(len(self.biases[i][a])):
-					self.biases[i][a][b] = inputrandom(self.biases[i][a][b],mutation_rate,changerate)
-		return self
+
+		for i in range(len(net.weights)):
+			for a in range(len(net.weights[i])):
+				for b in range(len(net.weights[i][a])):
+					net.weights[i][a][b] = inputrandom(net.weights[i][a][b],mutation_rate,changerate)
+		for i in range(len(net.biases)):
+			for a in range(len(net.biases[i])):
+				for b in range(len(net.biases[i][a])):
+					net.biases[i][a][b] = inputrandom(net.biases[i][a][b],mutation_rate,changerate)
+		return net
 def sigmoid(z):
 	#The sigmoid function
 	return 1.0/(1.0+np.exp(-z))
@@ -126,15 +120,17 @@ if __name__ == "__main__":
 	training_data = pickle.load(f)
 	f.close()
 	#create 1000 networks
-	networks = Population(50,layers)
+	networks = Population(10,layers)
 	exit = False
 	counter = 0
 	while not(exit):
+
+		counter+=1
+		print(" ")
+		print(counter)
+		print(" ")
+		#exit = True
+		#mainloop
+		networks.mainloop()
 		if keyboard.is_pressed('q'):
 			exit = True
-		counter+=1
-		print(counter)
-		#exit = True
-		#main loop
-		networks.addgenepool()
-		networks.createnewpop()
