@@ -18,14 +18,27 @@ class Population:
 
 			#makes n networks with layers layers
 	def mainloop(self):
-		for network in self.pop:
-			if network.fitness_numcor()>self.topfit.fitness:
-				self.topfit = network
-				print("changed")
-		self.pop = []
-		self.pop.append(self.topfit)
-		for x in range(self.number-1):
-			self.pop.append(self.topfit.mutate(.3,.5))
+		exit = False
+		counter = 0
+		while not(exit):
+
+			counter+=1
+			print(" ")
+			print(counter)
+			print(" ")
+			#exit = True
+			#mainloop
+			for network in self.pop:
+				if network.fitness_numcor()>self.topfit.fitness:
+					self.topfit = network
+					print("changed")
+			self.pop = []
+			self.pop.append(self.topfit)
+			for x in range(self.number-1):
+				self.pop.append(self.topfit.mutate(.3,.5))
+			if keyboard.is_pressed('q'):
+				exit = True
+
 		#mutates
 class Network:
 	def __init__(self, sizes, weights = None, biases = None):
@@ -121,16 +134,4 @@ if __name__ == "__main__":
 	f.close()
 	#create 1000 networks
 	networks = Population(10,layers)
-	exit = False
-	counter = 0
-	while not(exit):
-
-		counter+=1
-		print(" ")
-		print(counter)
-		print(" ")
-		#exit = True
-		#mainloop
-		networks.mainloop()
-		if keyboard.is_pressed('q'):
-			exit = True
+	networks.mainloop()
