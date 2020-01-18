@@ -3,8 +3,6 @@
 import random
 import pickle
 import os
-
-# Third-party libraries
 import numpy as np
 class Network:
     def __init__(self, sizes, weights = None, biases = None):
@@ -134,4 +132,4 @@ if __name__ == "__main__":
     f = open("data/data_2.data","wb")
     pickle.dump([net.weights,net.biases],f)
     f.close
-    os.system("python numbercorrect.py")
+    os.system("python3 numbercorrect.py")
