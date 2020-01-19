@@ -124,8 +124,8 @@ if __name__ == "__main__":
     f = open("data/data_expanded.data","rb")
     training_data = pickle.load(f)
     f.close()
-    learningrate = 3
-    mini_batch_size = 1
+    learningrate = 4
+    mini_batch_size = 10
     epochs = 5
     net = Network(layers)
     net.SGD(training_data, epochs, mini_batch_size, learningrate)
