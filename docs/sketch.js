@@ -1,5 +1,5 @@
 function setup() {
-
+  
   var canv = createCanvas(500, 500);
   canv.parent("canvas")
   background(0);
@@ -29,7 +29,7 @@ function draw() {
 }
 }
 function predict(inputs){
-let weights = [[[ 9.41381223e-02,  2.21249913e-02, -1.69734832e-01,
+var weights = [[[ 9.41381223e-02,  2.21249913e-02, -1.69734832e-01,
          9.35132981e-02, -1.03826051e-01, -7.69532842e-02,
         -6.82925061e-02,  1.21729389e-02,  3.00230894e-02,
         -3.35478546e-02, -1.12152565e-01,  7.55323998e-03,
@@ -2133,9 +2133,18 @@ let weights = [[[ 9.41381223e-02,  2.21249913e-02, -1.69734832e-01,
        [-3.41306073],
        [-1.19425559]], [[-0.59040963],
        [ 0.57468279]]];
-       //console.log(inputs);
+
+       fetch("weights_biases.json").then(function (response){
+         return response.json();
+       }).then(function (obj){
+         console.log(obj);
+       });
+      //weights = mydata.weights;
+      //biases = mydata.biases;
+
+
+
        inputs = sigmoid(math.add(math.multiply(weights[0],inputs),biases[0]));
-       //console.log(inputs);
        output = sigmoid(math.add(math.multiply(weights[1],inputs),biases[1]));
        if (output[1]<output[0]){
            document.getElementById("header").innerHTML = "Smiley Face";
