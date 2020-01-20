@@ -1,13 +1,12 @@
 
 async function getData(inputs){
   const response = await fetch("https://g-w1.github.io/first-ML/weights_biases.json");
-  const ans = await response.json();
-  const mydata = await ans;
-  var {weights,biases} = mydata;
+  const mydata = await response.json();
   var weights = mydata.weights;
   var biases = mydata.biases;
   inputs = sigmoid(math.add(math.multiply(weights[0],inputs),biases[0]));
   output = sigmoid(math.add(math.multiply(weights[1],inputs),biases[1]));
+  console.log(output);
   if (output[1]<output[0]){
   document.getElementById("header").innerHTML = "Smiley Face";
   return "smiely";
