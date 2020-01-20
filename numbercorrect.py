@@ -1,6 +1,7 @@
 import pickle
 from learn import Network,layers
 import numpy as np
+import os
 f = open("data/data_2.data","rb")
 params = pickle.load(f)
 f.close()
@@ -20,3 +21,5 @@ for img in test_data:
         corr+=1
 print(str(corr)+"/"+str(len(test_data)))
 print(corr/len(test_data))
+'''if corr/len(test_data)<.96:
+    os.system("python3 learn.py")'''

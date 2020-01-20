@@ -19,7 +19,7 @@ class Network:
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        self.weights = [np.random.randn(y, x)/np.sqrt(x/5)
+        self.weights = [np.random.randn(y, x)/np.sqrt(x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
         if biases:
             self.biases = biases
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     f = open("data/data_expanded.data","rb")
     training_data = pickle.load(f)
     f.close()
-    learningrate = 4
+    learningrate = 3.0
     mini_batch_size = 10
     epochs = 5
     net = Network(layers)
