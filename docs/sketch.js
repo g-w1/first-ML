@@ -1,8 +1,7 @@
 
 async function getData(inputs){
   const response = await fetch("https://g-w1.github.io/first-ML/weights_biases.json");
-  const data = await response.json();
-  const ans = await JSON.parse(data);
+  const ans = await response.json();
   const mydata = await ans;
   var {weights,biases} = mydata;
   var weights = mydata.weights;
