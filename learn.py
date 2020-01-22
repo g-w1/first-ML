@@ -126,7 +126,7 @@ if __name__ == "__main__":
     f.close()
     learningrate = 3
     mini_batch_size = 2
-    epochs = 5
+    epochs = random.randint(5,11)
     net = Network(layers)
     net.SGD(training_data, epochs, mini_batch_size, learningrate)
     f = open("data/data_2.data","wb")

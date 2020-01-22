@@ -43,7 +43,7 @@ console.log(predict(inputs))
   })
 }
 function draw() {
-  strokeWeight(60);
+  strokeWeight(40);
   stroke(255);
   if (mouseIsPressed) {
     line(pmouseX, pmouseY, mouseX, mouseY);
