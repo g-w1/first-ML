@@ -21,5 +21,5 @@ for img in test_data:
         corr+=1
 print(str(corr)+"/"+str(len(test_data)))
 print(corr/len(test_data))
-'''if corr/len(test_data)<.96:
-    os.system("python3 learn.py")'''
+if corr/len(test_data)<.94:
+    os.system("python3 learn.py")
